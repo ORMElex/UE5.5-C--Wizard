@@ -37,21 +37,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BotProperties", meta = (ClampMin = "0"))
 	float Speed;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BotProperties")
-	float HitPoints;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BotProperties")
 	int32 Experience;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BotProperties")
-	float BaseAttackDamage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MonsterProperties")
-	float AttackTimeout;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BotProperties")
-	float TimeSinceLastStrike;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BotProperties")
 	TSubclassOf<AWand> WandClass;

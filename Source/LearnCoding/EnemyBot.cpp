@@ -14,11 +14,7 @@ AEnemyBot::AEnemyBot()
 	AIControllerClass = AEnemyAIController::StaticClass();
 
 	Speed = 50;
-	HitPoints = 20;
 	Experience = 0;
-	BaseAttackDamage = 1;
-	AttackTimeout = 1.5f;
-	TimeSinceLastStrike = 0.f;
 	
 }
 
