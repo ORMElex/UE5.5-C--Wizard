@@ -3,6 +3,7 @@
 
 #include "EnemyAIController.h"
 #include "EnemyBot.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 AEnemyAIController::AEnemyAIController()
 {
@@ -24,6 +25,12 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 void AEnemyAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	AActor* Enemy = Bot_PC->GetClosestEnemyInView();
+	AActor* Enemy = GetFocusOnActor();
 	SetFocus(Enemy);
+}
+
+AActor* AEnemyAIController::GetFocusOnActor() const
+{
+	if (!GetBlackboardComponent()) return nullptr;
+	return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnKeyName));
 }

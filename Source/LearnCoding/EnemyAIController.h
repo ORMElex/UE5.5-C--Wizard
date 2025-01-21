@@ -22,10 +22,15 @@ public:
 	AEnemyAIController();
 
 protected:
-	void OnPossess(APawn* InPawn) override;
-
-	void Tick(float DeltaTime) override;
+	virtual void OnPossess(APawn* InPawn) override;
+	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UEnemyAIPerceptionComponent* Bot_PC;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+	FName FocusOnKeyName = "EnemyActor";
+
+private:
+	AActor* GetFocusOnActor() const;
 };

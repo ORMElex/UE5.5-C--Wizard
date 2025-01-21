@@ -14,4 +14,12 @@ class LEARNCODING_API UFindEnemyService : public UBTService
 {
 	GENERATED_BODY()
 	
+public:
+	UFindEnemyService();
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+	FBlackboardKeySelector EnemyActorKey;
+
+	void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 };
