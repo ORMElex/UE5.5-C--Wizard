@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Wand.h"
 #include "GameFramework/Character.h"
 
 #include "WeaponComponent.generated.h"
 
+class AWand;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class LEARNCODING_API UWeaponComponent : public UActorComponent
@@ -19,16 +19,16 @@ public:
 	// Sets default values for this component's properties
 	UWeaponComponent();
 
-private:
-
-
-	void SpawnWand();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	bool bisAttacking;
+	bool bisAttacking = false;
+
+	ACharacter* Character;
+
+	void SpawnWand();
 
 public:	
 
@@ -44,7 +44,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool isAttacking() const { return bisAttacking; }
 
-	void Attack();
-	void AttackStop();
+	virtual void Attack();
+	virtual void AttackStop();
 		
+private:
+	FTimerHandle TimerHandle;
 };

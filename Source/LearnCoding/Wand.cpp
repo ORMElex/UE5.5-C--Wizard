@@ -18,32 +18,36 @@ void AWand::BeginPlay()
 
 }
 
-void AWand::Attack_Implementation()
+void AWand::Attack_Implementation(AActor* Enemy=nullptr)
 {
 	if (!GetWorld()) return;
 
 	const ACharacter* Char = Cast<ACharacter>(GetOwner());
 	if (!Char) return;
 
-	const AController* Controller = Char->GetController<APlayerController>();
-	if (!Controller) return;
-
 	const FTransform socktrfm = WandMesh->GetSocketTransform(MuzzleSocketName);
 	const FVector startloc = socktrfm.GetLocation();
 	
 	FVector ViewLoc;
 	FRotator ViewRot;
+	FVector endloc;
+
 	if (Char->IsPlayerControlled())
 	{
+		const AController* Controller = Char->GetController<APlayerController>();
+		if (!Controller) return;
 		Controller->GetPlayerViewPoint(ViewLoc, ViewRot);
+
+		const FVector forw = ViewRot.Vector().GetSafeNormal();
+		endloc = ViewLoc + forw * range;
 	}
 	else
 	{
+		if (!Enemy) return;
 		ViewLoc = startloc;
 		ViewRot = WandMesh->GetSocketRotation(MuzzleSocketName);
+		endloc = Enemy->GetActorLocation();
 	}
-	const FVector forw = ViewRot.Vector().GetSafeNormal();
-	const FVector endloc = ViewLoc + forw * range;
 
 	FVector spellDirection = (endloc - startloc).GetSafeNormal();
 	DrawDebugLine(GetWorld(), startloc, endloc, FColor::Red, false, 3.f, 0, 3.f);

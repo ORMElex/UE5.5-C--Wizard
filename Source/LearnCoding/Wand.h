@@ -35,8 +35,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Attack", meta = (ClampMin = "0"))
 	float range = 1500;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack", meta = (ClampMin = "0"))
+	float TimeBtwnAttack;
+
 	UFUNCTION(BlueprintNativeEvent, Category = "Attack")
-	void Attack();
+	void Attack(AActor* Enemy=nullptr);
 
 	
 

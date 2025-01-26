@@ -21,6 +21,8 @@ class LEARNCODING_API AEnemyAIController : public AAIController
 public:
 	AEnemyAIController();
 
+	AActor* GetFocusOnActor() const;
+
 protected:
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float DeltaTime) override;
@@ -30,7 +32,4 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 	FName FocusOnKeyName = "EnemyActor";
-
-private:
-	AActor* GetFocusOnActor() const;
 };

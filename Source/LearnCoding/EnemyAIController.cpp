@@ -15,10 +15,10 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	const auto EnemyCharacter = Cast<AEnemyBot>(InPawn);
-	if (EnemyCharacter)
+	const auto BotCharacter = Cast<AEnemyBot>(InPawn);
+	if (BotCharacter)
 	{
-		RunBehaviorTree(EnemyCharacter->BehaviorTreeAsset);
+		RunBehaviorTree(BotCharacter->BehaviorTreeAsset);
 	}
 }
 

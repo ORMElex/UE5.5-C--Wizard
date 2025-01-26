@@ -2,7 +2,7 @@
 
 
 #include "EnemyBot.h"
-
+#include "AIWeaponComponent.h"
 
 // Sets default values
 AEnemyBot::AEnemyBot()
@@ -15,6 +15,10 @@ AEnemyBot::AEnemyBot()
 
 	Speed = 50;
 	Experience = 0;
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+
+	WeaponComponent = CreateDefaultSubobject<UAIWeaponComponent>(TEXT("WeaponComponent"));
 	
 }
 
@@ -31,12 +35,6 @@ void AEnemyBot::BeginPlay()
 void AEnemyBot::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-}
-
-
-void AEnemyBot::Attack_Implementation()
-{
-	SpawnedWand->Attack();
 }
 
 void AEnemyBot::SpawnWand()

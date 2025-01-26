@@ -54,7 +54,7 @@ void AMyCharacterWizard::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &AMyCharacterWizard::SprintStop);
 
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, WeaponComponent, &UWeaponComponent::Attack);
-	PlayerInputComponent->BindAction("Attack", IE_Released, WeaponComponent, &UWeaponComponent::AttackStop);
+	//PlayerInputComponent->BindAction("Attack", IE_Released, WeaponComponent, &UWeaponComponent::AttackStop);
 
 	PlayerInputComponent->BindAction("Inventory", IE_Pressed, this, &AMyCharacterWizard::ToggleInventory);
 }
@@ -73,6 +73,7 @@ void AMyCharacterWizard::AddControllerYawInput(float Value)
 
 void AMyCharacterWizard::MoveForward(float value)
 {
+	if (WeaponComponent->isAttacking()) return;
 	if (Controller && value)
 	{
 		FRotator ControlRotation = Camera->GetComponentRotation();

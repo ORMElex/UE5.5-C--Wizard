@@ -1,5 +1,6 @@
 
 #include "Spell.h"
+#include "MyCharacterWizard.h"
 
 // Sets default values
 ASpell::ASpell()
@@ -43,13 +44,13 @@ void ASpell::Tick(float DeltaTime)
 
 void ASpell::Prox_Implementation(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->IsA(UStaticMeshComponent::StaticClass()) && OtherActor)
+	if (OtherActor)
 	{
 		//OtherActor->TakeDamage();
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, NULL, this, nullptr);
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Hit");
+		Destroy();
 	}
-	Destroy();
 }
 
 

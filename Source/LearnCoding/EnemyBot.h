@@ -8,10 +8,12 @@
 #include "Kismet/GameplayStatics.h"
 #include "Wand.h"
 #include "MyCharacterWizard.h"
-#include "EnemyAiController.h"
+#include "EnemyAIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 
 #include "EnemyBot.generated.h"
+
+class UAIWeaponComponent;
 
 UCLASS()
 class LEARNCODING_API AEnemyBot : public ACharacter
@@ -47,9 +49,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BotProperties")
 	UBehaviorTree* BehaviorTreeAsset;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	UHealthComponent* HealthComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	UAIWeaponComponent* WeaponComponent;
+
 	AWand* SpawnedWand;
 	AMyCharacterWizard* PlayChar;
-
-	UFUNCTION(BlueprintNativeEvent)
-	void Attack();
 };

@@ -4,7 +4,7 @@
 #include "EnemyAttackService.h"
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "WeaponComponent.h"
+#include "AIWeaponComponent.h"
 
 UEnemyAttackService::UEnemyAttackService()
 {
@@ -19,14 +19,19 @@ void UEnemyAttackService::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * N
 
 	const auto HasAim = BlackBoard && BlackBoard->GetValueAsObject(EnemyActorKey.SelectedKeyName);
 
-		if (BotController)
+	if (BotController)
+	{
+		const auto WeaponComp = BotController->GetPawn()->FindComponentByClass<UAIWeaponComponent>();
+		if (WeaponComp && HasAim)
 		{
-			const auto WeaponComp = BotController->GetPawn()->FindComponentByClass<UWeaponComponent>();
-			if (WeaponComp)
-			{
-				HasAim ? WeaponComp->Attack() : WeaponComp->AttackStop(); 
-			}
+				const auto Enemy = Cast<AActor>(BlackBoard->GetValueAsObject(EnemyActorKey.SelectedKeyName));
+				WeaponComp->Attack(Enemy);
 		}
+		else if (WeaponComp)
+		{
+			WeaponComp->AttackStop();
+		}
+	}
 	
 
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);

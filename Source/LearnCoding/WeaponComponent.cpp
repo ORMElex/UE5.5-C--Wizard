@@ -2,6 +2,8 @@
 
 
 #include "WeaponComponent.h"
+#include "Engine/World.h"
+#include "Wand.h"
 
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
@@ -19,6 +21,8 @@ void UWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Character = Cast<ACharacter>(GetOwner());
+
 	SpawnWand();
 	
 }
@@ -28,7 +32,10 @@ void UWeaponComponent::SpawnWand()
 {
 	if (!GetWorld()) return;
 
-	ACharacter* Character = Cast<ACharacter>(GetOwner());
+	if (!Character)
+	{
+		Character = Cast<ACharacter>(GetOwner());
+	}
 	if (!Character) return;
 
 	SpawnedWand = GetWorld()->SpawnActor<AWand>(WandClass);
@@ -43,13 +50,17 @@ void UWeaponComponent::SpawnWand()
 void UWeaponComponent::Attack()
 {
 	if (!SpawnedWand) return;
+	if (bisAttacking) return;
 	bisAttacking = true;
 	SpawnedWand->Attack();
+	UWorld* World = GetWorld();
+	World->GetTimerManager().SetTimer(TimerHandle, this, &UWeaponComponent::AttackStop, SpawnedWand->TimeBtwnAttack, false);
 }
 
 void UWeaponComponent::AttackStop()
 {
-	if (!SpawnedWand) return;
+	UWorld* World = GetWorld();
+	World->GetTimerManager().ClearTimer(TimerHandle);
 	bisAttacking = false;
 	//SpawnedWand->AttackStop();
 }
